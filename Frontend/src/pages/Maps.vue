@@ -1,88 +1,151 @@
+
 <template>
-  <card class="card-map" title="Google Maps">
-    <div class="map">
-      <div id="map"></div>
+  <section class="bar-container">
+    <div class="bar-item">
+      <input
+        type="text"
+        v-model="search"
+        placeholder="Find Customers"
+        class="search-bar"
+      />
     </div>
-  </card>
+   
+  </section>
+
 </template>
+
 <script>
 export default {
-  mounted() {
-    var myLatlng = new window.google.maps.LatLng(40.748817, -73.985428);
-    var mapOptions = {
-      zoom: 13,
-      center: myLatlng,
-      scrollwheel: false, // we disable de scroll over the map, it is a really annoing when you scroll through page
-      styles: [
-        {
-          featureType: "water",
-          stylers: [{ saturation: 43 }, { lightness: -11 }, { hue: "#0088ff" }],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry.fill",
-          stylers: [
-            { hue: "#ff0000" },
-            { saturation: -100 },
-            { lightness: 99 },
-          ],
-        },
-        {
-          featureType: "road",
-          elementType: "geometry.stroke",
-          stylers: [{ color: "#808080" }, { lightness: 54 }],
-        },
-        {
-          featureType: "landscape.man_made",
-          elementType: "geometry.fill",
-          stylers: [{ color: "#ece2d9" }],
-        },
-        {
-          featureType: "poi.park",
-          elementType: "geometry.fill",
-          stylers: [{ color: "#ccdca1" }],
-        },
-        {
-          featureType: "road",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#767676" }],
-        },
-        {
-          featureType: "road",
-          elementType: "labels.text.stroke",
-          stylers: [{ color: "#ffffff" }],
-        },
-        { featureType: "poi", stylers: [{ visibility: "off" }] },
-        {
-          featureType: "landscape.natural",
-          elementType: "geometry.fill",
-          stylers: [{ visibility: "on" }, { color: "#b8cb93" }],
-        },
-        { featureType: "poi.park", stylers: [{ visibility: "on" }] },
-        {
-          featureType: "poi.sports_complex",
-          stylers: [{ visibility: "on" }],
-        },
-        { featureType: "poi.medical", stylers: [{ visibility: "on" }] },
-        {
-          featureType: "poi.business",
-          stylers: [{ visibility: "simplified" }],
-        },
-      ],
+  name: "DisplayUserData",
+  components: {},
+  data() {
+    return {
+      userData: [],
+      search: "",
     };
-    var map = new window.google.maps.Map(
-      document.getElementById("map"),
-      mapOptions
-    );
-
-    var marker = new window.google.maps.Marker({
-      position: myLatlng,
-      title: "Hello World!",
-    });
-
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);
+  },
+  /* 
+    Fetch data from API and save it in userData
+  */
+  mounted() {
+    fetch('http://localhost:8084/users')
+          .then((res) => res.json())
+      .then((data) => (this.userData = data));
+    console.log(this.userData);
+  },
+  /*
+    filter through userData, if the data input into the searchbar
+    matches the data in userData, the results will be returned
+  */
+  computed: {
+    filterUserData: function () {
+      return this.userData.filter((user) => {
+        return user.firstname.toLowerCase().match(this.searchtoLowerCase());
+      });
+    },
   },
 };
 </script>
-<style></style>
+
+<style scoped>
+.flex-container {
+  display: flex;
+  width: 100%;
+  flex-flow: row wrap;
+  margin: 0 auto;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+.flex-item {
+  width: 363px;
+  height: 725px;
+  margin: 0px 43.5px 43.5px 25px;
+  background-color: white;
+  position: static;
+  border-radius: 8px;
+  line-height: 36px;
+}
+.paragraph-weight {
+  font-weight: 600;
+  margin-left: 50px;
+}
+.bar-container {
+  display: flex;
+  position: static;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 8px;
+  justify-content: space-between;
+  align-items: flex-start;
+  text-align: center;
+}
+.bar-item {
+  width: 100%;
+  position: static;
+  align-self: stretch;
+}
+p img {
+  margin-right: 12px;
+}
+span {
+  display: inline-block;
+}
+input {
+  border: 0;
+  border-radius: 8px;
+  width: 546px;
+  height: 50px;
+  font-weight: 550;
+  color: black;
+}
+button {
+  background-color: #FFFFFF;
+  padding: 10px 30px 10px 30px;
+  border: 0;
+  border-radius: 8px;
+}
+::placeholder {
+  color: black;
+}
+@media only screen and (max-width: 568px) {
+  .flex-container {
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: space-between;
+  }
+  .flex-item {
+    width: 344px;
+    height: 368px;
+    margin: 0px 43.5px 43.5px 25px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 32px;
+  }
+  .bar-container {
+    align-items: flex-end;
+    flex-flow: wrap;
+    width: 100%;
+  }
+  .bar-item {
+    width: 100%;
+    margin-top: 16px;
+  }
+  .profile-img {
+    position: absolute;
+    width: 116px;
+    height: 112px;
+    border-radius: 8px;
+    justify-self: center;
+    float: right;
+  }
+  .paragraph-weight {
+    margin-left: 8px;
+  }
+  img {
+    position: absolute;
+  }
+  input {
+    width: 100%;
+  }
+}
+</style>

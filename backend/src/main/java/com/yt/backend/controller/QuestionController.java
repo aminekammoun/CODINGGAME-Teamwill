@@ -11,6 +11,7 @@ import java.util.List;
 @CrossOrigin(origins ="http://localhost:8081")
 public class QuestionController {
     @Autowired
+
     private QuestionService questionService;
 
     //add Patient
