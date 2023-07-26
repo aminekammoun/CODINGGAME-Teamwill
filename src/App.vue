@@ -1,16 +1,29 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+  <Navbar/></div>
+  <div>
+    <Quote :quote=quoteText :author= quoteAuthor />
+  </div>
+<Background/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Background from './components/Background.vue';
+import Navbar from './components/Navbar.vue';
+import Quote from './components/Quote.vue';
+
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Navbar, Quote,Background
+},
+data() {
+    return {
+      quoteText: "Become a better programmer",
+      quoteAuthor: "Improve your skills now !",
+    };
+  },
 }
 </script>
 

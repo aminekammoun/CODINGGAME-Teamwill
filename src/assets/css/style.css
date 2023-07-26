@@ -1,0 +1,9 @@
+/* styles.css */
+
+/* Import the Muli font from a CDN or your local font file */
+@import url('https://fonts.googleapis.com/css2?family=Muli&display=swap');
+
+/* Apply the font-family to the whole page */
+html {
+  font-family: 'Muli', sans-serif;
+}
