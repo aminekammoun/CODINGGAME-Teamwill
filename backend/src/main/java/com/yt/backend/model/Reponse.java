@@ -1,9 +1,13 @@
 package com.yt.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="reponse_table")
 public class Reponse {
@@ -18,6 +22,8 @@ public class Reponse {
     public void setIdrep(long idrep) {
         this.idrep = idrep;
     }
+
+
 
 
 
@@ -61,13 +67,9 @@ public class Reponse {
     private String reponse3;
     private String reponsecorrecte;
 
-    private String idquest;
 
-    public String getIdquest() {
-        return idquest;
-    }
 
-    public void setIdquest(String idquest) {
-        this.idquest = idquest;
-    }
+
+
+
 }

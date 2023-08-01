@@ -15,7 +15,7 @@ import static com.yt.backend.model.Role.CANDIDAT;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins ="http://localhost:8081")
+
 public class UserController {
 
     @Autowired

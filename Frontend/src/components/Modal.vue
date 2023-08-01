@@ -1,13 +1,14 @@
 <template>
     <transition name="modal-fade">
-      <div class="modal-container">
+        <div v-click-outside="onClickOutside">
+        <div class="modal-container">
         <div class="modal">
           <header class="modal-header">
-          <slot name="header">
-            <h3>Add user</h3>
-          </slot>
         </header>
-        <section class="modal-body">
+            <section class="modal-body">  <h3>Add user</h3>
+          
+        
+      
         <div>
              
                
@@ -49,17 +50,18 @@
                  
     
               <!--Role-->
-              <label for="gender" class="form-label">Role</label>
+              <label for="role" class="form-label">Role</label>
               <div class="form-check">
-                <input class="form-check-input"   type="radio" name="role" id="admin" value="ADMIN" v-model="user.role">
-                <label class="form-check-label" for="admin">admin</label>
+                <input    type="radio" name="role" style="height:35px; width:35px; vertical-align: middle;" id="admin" value="ADMIN" v-model="user.role">
+                <label  for="admin" style="margin-left: 5px;">admin</label>
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="radio"   name="role" id="Candidat" value="CANDIDAT" v-model="user.role">
-                <label class="form-check-label" for="Candidat">Candidat</label>
+                <input  type="radio"  style="height:35px; width:35px; vertical-align: middle;" name="role" id="Candidat" value="CANDIDAT" v-model="user.role">
+                <label  for="Candidat" style="margin-left: 5px;">Candidat</label>
               </div>
            
-              
+             <br/>  
+             
               <div class="row">
                 <div class="col-md-12 form-group">
                   <input class="btn btn-primary w-100" type="submit" @click="reloadPage" value="Submit">
@@ -80,11 +82,13 @@
                 
               
             </form>
+           
         </div>
-        </section>
        
        
+    </section>
         </div>
+    </div>
       </div>
     </transition>
   </template>
@@ -118,6 +122,9 @@
       }
     },
     methods: {
+        onClickOutside (event, el) {
+    this.closeModal();
+  },
         reloadPage() {
           window.location.reload();
         },
@@ -158,28 +165,21 @@
       justify-content: center;
       align-items: center;
     }
-    .modal {
-    background: #FFFFFF;
-    top:auto;
-      left:auto;
-    overflow-x: auto;
-    display: flex;
-    flex-direction: column;
-    width: 400px;
-    border-radius: 3px;
-  }
+   
 
     .modal {
       background: #FFFFFF;
       top:auto;
       left:auto;
-      height: min-content;
+      height: max-content;
       width: min-content ;
       overflow-x: auto;
       display: flex;
       flex-direction: column;
       width:450px;
       border-radius: 3px;
+      opacity: 100%;
+
     }
   
     .modal-header,

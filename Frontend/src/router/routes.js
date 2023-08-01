@@ -1,7 +1,8 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 // GeneralViews
 import NotFound from "@/pages/NotFoundPage.vue";
-
+ 
+ 
 // Admin pages
 import Users from "@/pages/Users.vue";
 import UserProfile from "@/pages/UserProfile.vue";
@@ -16,12 +17,14 @@ import Candidats from "@/pages/Candidats.vue";
 import Test from "@/pages/Test.vue";
 
 const routes = [
-  
+ 
+
   {
     path: "/",
     name: "login",
     component: Login,
   },
+
   {
     path: "/",
     name :"dashboard",

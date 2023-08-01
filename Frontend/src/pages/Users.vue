@@ -1,12 +1,8 @@
 <template>
-    
-   
+
    <div>   
      <div>     
       <div class="col-12"></div>
-
-
-   
    <div id="app">
     <section class="bar-container">
     <div class="bar-item">
@@ -17,9 +13,8 @@
         class="search-bar"
       />
     </div>
-   
   </section>
-
+<br/>
  
 
   
@@ -114,8 +109,7 @@ import Modal from "../components/Modal.vue"
   computed: {
     filterUserData: function () {
       return this.userData.filter((user) => {
-        return user.lastname.toLowerCase().match(this.search.toLowerCase());
-        
+        return ((user.lastname.toLowerCase().match(this.search.toLowerCase()))||(user.firstname.toLowerCase().match(this.search.toLowerCase()))||(user.email.toLowerCase().match(this.search.toLowerCase()))||(user.role.toLowerCase().match(this.search.toLowerCase())));
       });
     },
   },
@@ -210,8 +204,8 @@ import Modal from "../components/Modal.vue"
 }
 .bar-container {
   display: flex;
-  position: static;
-  width: 100%;
+ 
+ 
   margin: 0 auto;
   border-radius: 8px;
   justify-content: space-between;
@@ -219,9 +213,13 @@ import Modal from "../components/Modal.vue"
   text-align: center;
 }
 .bar-item {
-  width: 100%;
-  position: static;
+   
+  
+  position: right;
   align-self: stretch;
+  
+  background-color: cadetblue;
+
 }
 p img {
   margin-right: 12px;

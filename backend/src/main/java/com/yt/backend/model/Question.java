@@ -1,7 +1,12 @@
 package com.yt.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="question_table")
 public class Question {
@@ -15,9 +20,13 @@ public class Question {
         return idquest;
     }
 
+
+
     public void setIdquest(long idquest) {
         this.idquest = idquest;
     }
+
+
 
     public String getType() {
         return type;
@@ -34,6 +43,18 @@ public class Question {
     public void setQuestion(String question) {
         this.question = question;
     }
+
+    public Reponse getReponse() {
+        return reponse;
+    }
+
+    public void setReponse(Reponse reponse) {
+        this.reponse = reponse;
+    }
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idrep")
+    private Reponse reponse;
 
 
 }
