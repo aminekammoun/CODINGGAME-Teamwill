@@ -55,8 +55,7 @@
           <div class="alert alert-danger">
             <button type="button" aria-hidden="true" class="close">×</button>
             <span>
-              <b> Danger - </b> This is a regular notification made with
-              ".alert-danger"</span
+              <b> Danger - </b> The time has elapsed, and no response has been selected"</span
             >
           </div>
         </div>
