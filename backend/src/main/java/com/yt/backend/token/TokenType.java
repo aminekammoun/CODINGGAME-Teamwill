@@ -1,4 +1,4 @@
-package com.yt.backend.model;
+package com.yt.backend.token;
 
 public enum TokenType {
     BEARER

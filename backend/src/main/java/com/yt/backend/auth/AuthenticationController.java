@@ -1,10 +1,17 @@
 package com.yt.backend.auth;
 
+import com.yt.backend.config.LogoutService;
 import com.yt.backend.model.Question;
+import com.yt.backend.model.User;
 import com.yt.backend.service.QuestionService;
+import com.yt.backend.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +25,7 @@ public class AuthenticationController {
     @Autowired
     private QuestionService questionService;
 
-
+    private UserService userService;
 @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
@@ -41,6 +48,8 @@ public class AuthenticationController {
 ){ return ResponseEntity.ok(service.authenticate(request));
 
 }
+
+
 
 
         //add Patient

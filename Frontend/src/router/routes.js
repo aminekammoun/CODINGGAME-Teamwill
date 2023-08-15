@@ -15,7 +15,17 @@ import AddUser from "@/pages/AddUser.vue"
 import Login from "@/components/Login.vue";
 import Candidats from "@/pages/Candidats.vue";
 import Test from "@/pages/Test.vue";
-
+import BeginTest from "@/pages/BeginTest.vue";
+import router from ".";
+import store from "../store";
+ 
+const requireAuth = () => (to, from, next) => {
+  console.log('beforeEnter :: ', store.getters.isAuthenticated);
+  if (store.getters.isAuthenticated) {
+    return next();
+  }
+  next('/users')
+};
 const routes = [
  
 
@@ -30,37 +40,39 @@ const routes = [
     name :"dashboard",
     component: DashboardLayout,
     
+  
+    
     children: [
       {
         path: "users",
         name: "users",
         component: Users,
+     
+         
       },
       {
         path: "stats",
         name: "stats",
         component: UserProfile,
+       
+
       },
-      {
-        path: "notifications",
-        name: "notifications",
-        component: Notifications,
-      },
+ 
       {
         path: "icons",
         name: "icons",
         component: Icons,
-      },
+         },
       {
         path: "maps",
         name: "maps",
         component: Maps,
-      },
+        },
       {
         path: "typography",
         name: "typography",
         component: Typography,
-      },
+       },
       {
         path: "table-list",
         name: "table-list",
@@ -70,22 +82,34 @@ const routes = [
         path: "adduser",
         name: "adduser",
         component: AddUser,
-      },
+        },
       {
         path: "candidats",
         name: "candidats",
         component: Candidats,
-      },
+       },
+       {
+        path: "notifications",
+        name: "notifications",
+        component: Notifications,
+       },
       {
-        path: "test",
-        name: "test",
-        component: Test,
-      },
+        path: "begin",
+        name: "begin",
+        component: BeginTest,
+       },
+    
       
-    ],
-  },
+    ],   
+  },  {
+    path: "/test",
+    name: "test",
+    component: Test,
+    },
   { path: "*", component: NotFound },
 ];
+ 
+ 
 
 /**
  * Asynchronously load view (Webpack Lazy loading compatible)

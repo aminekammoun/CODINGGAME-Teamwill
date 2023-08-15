@@ -1,26 +1,16 @@
 package com.yt.backend.auth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yt.backend.config.JwtService;
-import com.yt.backend.model.Role;
 import com.yt.backend.model.User;
 import com.yt.backend.repository.TokenRepository;
 import com.yt.backend.repository.UserRepository;
 import com.yt.backend.token.Token;
 import com.yt.backend.token.TokenType;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
@@ -55,13 +45,14 @@ public class AuthenticationService {
                         request.getPassword()
                 )
         );
-        var user = repository.findByEmail(request.getEmail())
-                .orElseThrow();
+        var user = repository.findByEmail(request.getEmail());
+
         var jwtToken = jwtService.generateToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .email(request.getEmail())
 
                 .build();
     }

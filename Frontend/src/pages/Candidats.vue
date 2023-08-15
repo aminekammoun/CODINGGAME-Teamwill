@@ -18,8 +18,8 @@
                                 <th scope="row">{{user.id}}</th>
                              <td>{{user.firstname}}</td>
                              <td>{{user.lastname}}</td>
-                             <td></td>
-                             <td></td>
+                             <td>{{user.status}}</td>
+                             <td>{{user.resultat}}</td>
                            </tr>
                          </tbody>
                        </table>
@@ -69,10 +69,7 @@
                      console.log(data)
                  })
              },
-         
-         
-                
-         
+     
         }};
        
      

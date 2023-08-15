@@ -1,19 +1,8 @@
 <template>
-    <transition name="modal-fade">
-        <div v-click-outside="onClickOutside">
-        <div class="modal-container">
-        <div class="modal">
-          <header class="modal-header">
-        </header>
-            <section class="modal-body">  <h3>Add user</h3>
-          
-        
-      
-        <div>
-             
-               
-             
-            <form @submit.prevent="addUser()">
+    
+
+    <b-modal v-model="modalShow">
+        <form @submit.prevent="addUser()">
               <!--name-->
               <div class="row">
                 <div class="col-md-12 form-group mb-3">
@@ -83,14 +72,10 @@
               
             </form>
            
-        </div>
+     </b-modal>
+
        
-       
-    </section>
-        </div>
-    </div>
-      </div>
-    </transition>
+      
   </template>
   
   <script>
@@ -154,55 +139,6 @@
   
   <style scoped>
   
-    .modal-container {
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background-color: rgba(0, 0, 0, 0.3);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-   
-
-    .modal {
-      background: #FFFFFF;
-      top:auto;
-      left:auto;
-      height: max-content;
-      width: min-content ;
-      overflow-x: auto;
-      display: flex;
-      flex-direction: column;
-      width:450px;
-      border-radius: 3px;
-      opacity: 100%;
-
-    }
-  
-    .modal-header,
-    .modal-footer {
-      padding: 15px;
-      display: flex;
-    }
-  
-    .modal-header {
-      color: grey;
-      justify-content: space-between;
-    }
-  
-    .modal-footer {
-      justify-content: flex-end;
-    }
-  
-    .modal-body {
-      color: grey;
-      position: relative;
-      padding: 20px 10px;
-      margin-left: 6px;
-    }
     .btn-close {
       color: #4DB6AC;
       background: #E0F2F1;

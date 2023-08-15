@@ -10,10 +10,12 @@ import java.util.List;
 public interface UserService {
     public User addUser (User user);
     public User getUserById(long id);
+
     public List<User> getUsers();
     public List<User> getCandidats(Role role);
     public void deleteUser(long id);
-    public User updateUser (User user);
+    public User updateUser (String email );
+    public User updateScore (String email ,int score );
 
 
 }

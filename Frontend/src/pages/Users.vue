@@ -17,6 +17,63 @@
 <br/>
  
 
+<b-modal @ok="handleOk" id="modal-prevent-closing"
+      ref="modal"
+      title="Submit "
+      @show="resetModal"
+      @hidden="resetModal" v-model="modalShow">    
+  <form @submit.prevent="addUser()">
+              <!--name-->
+              <div class="row">
+                <div class="col-md-12 form-group mb-3">
+                  <label for="name" class="form-label">First name</label>
+                  <input id="name"  type="text" name="firstname" class="form-control" placeholder="Firstame" required v-model="user.firstname">
+                </div>
+              </div>
+               <!--surname-->
+              <div class="row">
+                  <div class="col-md-12 form-group mb-3">
+                    <label for="surname" class="form-label">Lastname</label>
+                    <input id="surname" type="text"  name="lastname" class="form-control" placeholder="Lastname" required v-model="user.lastname" >
+                  </div>
+                </div>
+              
+              <!--Email-->
+              <div class="row">
+                  <div class="col-md-12 form-group mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input id="email" type="email"  name="email" class="form-control" placeholder="Email" required v-model="user.email" >
+                  </div>
+                </div>
+
+              <!--Phone Number-->
+              <div class="row">
+                  <div class="col-md-12 form-group mb-3">
+                    <label for="password" class="form-label">password</label>
+                    <input id="password" type="password"  name="password" class="form-control" placeholder="password" required v-model="user.password" >
+                  </div>
+                </div>
+
+          
+              
+                 
+    
+              <!--Role-->
+              <label for="role" class="form-label">Role</label>
+              <div class="form-check">
+                <input    type="radio" name="role" style="height:35px; width:35px; vertical-align: middle;" id="admin" value="ADMIN" v-model="user.role">
+                <label  for="admin" style="margin-left: 5px;">admin</label>
+              </div>
+              <div class="form-check">
+                <input  type="radio"  style="height:35px; width:35px; vertical-align: middle;" name="role" id="Candidat" value="CANDIDAT" v-model="user.role">
+                <label  for="Candidat" style="margin-left: 5px;">Candidat</label>
+              </div>
+           
+             <br/>  
+              
+              
+            
+            </form></b-modal>
   
   <table class="table table-striped">
                         <thead>
@@ -26,45 +83,31 @@
                             <th scope="col">lastname</th>
                             <th scope="col">email</th>
                             <th scope="col">Role</th>
-                           <th scope="col"><button
-        type="button"
-        class="btn btn-primary pull-right"
-        @click="showModal"
-      >
-     Add user
-      </button></th>
+                          <th scope="col"><b-button @click="modalShow = !modalShow" style="background-color: rgb(87, 152, 130);">Add user</b-button></th>
                           </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="user in filterUserData" :key="user.id">
-                            <th scope="row">{{user.id}}</th>
-                            <td>{{user.firstname}}</td>
-                            <td>{{user.lastname}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.role}}</td>
+                            <tr v-for="use in filterUserData" :key="use.id">
+                            <th scope="row">{{use.id}}</th>
+                            <td>{{use.firstname}}</td>
+                            <td>{{use.lastname}}</td>
+                            <td>{{use.email}}</td>
+                            <td>{{use.role}}</td>
                             
                             <td>
                               
-                              <button  class="btn btn-primary pull-right" @click="deleteUser(user.id)" >Delete</button>
+                              <b-button  class="btn btn-primary pull-right" @click="deleteUser(use.id)" >Delete</b-button>
                             </td>
                           </tr>
                         </tbody>
                         </table>
                         </div>
-                        <div class="container my-5">
-    
-                        </div>
+                       
                      
   
        </div>
        <div>
-        <Modal
-     v-show="modalVisible"
-     @close="closeModal"
-     title="Modal Exemple"
-     text="Text modal exemple!" 
-     refresh 
-    />
+     
     
   </div>
   </div>  
@@ -84,7 +127,7 @@
  import { reactive } from 'vue';
  
 
-import Modal from "../components/Modal.vue"
+ 
 
  
  
@@ -96,7 +139,7 @@ import Modal from "../components/Modal.vue"
     name: "App",
     components: {
       PaperTable,
-      Modal
+       
 
     },
 
@@ -106,7 +149,12 @@ import Modal from "../components/Modal.vue"
       .then((data) => (this.userData = data));
     console.log(this.userData);
   },
-  computed: {
+ computed: {
+    
+    user() {
+      return this.$store.state.user;
+    }, 
+ 
     filterUserData: function () {
       return this.userData.filter((user) => {
         return ((user.lastname.toLowerCase().match(this.search.toLowerCase()))||(user.firstname.toLowerCase().match(this.search.toLowerCase()))||(user.email.toLowerCase().match(this.search.toLowerCase()))||(user.role.toLowerCase().match(this.search.toLowerCase())));
@@ -118,27 +166,45 @@ import Modal from "../components/Modal.vue"
             return {
                 questions: [],
                 users: [],
-                modalVisible: false,
+               
                 data: {},
                 userData: [],
                 search: "",
+                user : {
+                  firstname: '',
+                  lastname:'',
+                  email: '',
+                  role: '',
+                  password:''
+              },
+              modalShow: false
             }
     },
     
 
    
         beforeMount(){
-            this.getQuestions()
+        
+        console.log ("aaaaaaaaaaaaaaaaaa")
             this.getUsers()
         },
 
         methods: {
-          showModal() {
-      this.modalVisible = true
-    },
-    closeModal() {
-      this.modalVisible = false
-    },
+          resetModal() {
+            this.firstname= '',
+            this.lastname='',
+            this.email='',
+            this.role='',
+            this.password=''
+      },
+          handleOk(bvModalEvent) {
+        // Prevent modal from closing
+        bvModalEvent.preventDefault()
+        // Trigger submit handler
+        this.addUser()
+        window.location.reload();
+      },
+    
             getUsers(){
                 fetch('http://localhost:8084/users')
                 .then(res => res.json())
@@ -147,23 +213,22 @@ import Modal from "../components/Modal.vue"
                     console.log(data)
                 })
             },
-            getQuestions(){
-                fetch('http://localhost:8084/questions')
-                .then(res => res.json())
-                .then(data => {
-                    this.questions = data
-                    console.log(data)
-                })
-            },
-            deleteQuestion(id){
-                fetch(`http://localhost:8084/question/${id}`, {
-                    method: 'DELETE'
-                })
-                .then(data => {
-                    console.log(data)
-                    this.getQuestions()
-                })
-            },
+           
+             
+            addUser(){
+              fetch('http://localhost:8084/api/v1/auth/register', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(this.user)
+                  
+           
+              })
+               
+                  
+
+          },
             deleteUser(id){
                 fetch(`http://localhost:8084/user/${id}`, {
                     method: 'DELETE'
@@ -171,9 +236,10 @@ import Modal from "../components/Modal.vue"
                 .then(data => {
                     console.log(data)
                     this.getUsers()
+                    window.location.reload();
                 })
             },
-        
+          
        }};
       
     

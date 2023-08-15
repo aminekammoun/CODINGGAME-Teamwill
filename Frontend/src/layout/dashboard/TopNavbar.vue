@@ -13,9 +13,9 @@
         <span class="navbar-toggler-bar"></span>
         <span class="navbar-toggler-bar"></span>
       </button>
-      <div class="collapse navbar-collapse">
+     <div class="collapse navbar-collapse">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+         <!-- <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="ti-panel"></i>
               <p>Stats</p>
@@ -32,12 +32,10 @@
             <a class="dropdown-item" href="#">Notification 3</a>
             <a class="dropdown-item" href="#">Notification 4</a>
             <a class="dropdown-item" href="#">Another notification</a>
-          </drop-down>
+          </drop-down>--> 
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="ti-settings"></i>
-              <p>Settings</p>
-            </a>
+            <b-button @click="logout"> <i class="fa fa-sign-out"></i>
+              <p>logout</p></b-button>
           </li>
         </ul>
       </div>
@@ -45,6 +43,9 @@
   </nav>
 </template>
 <script>
+import axios from 'axios';
+import router from "@/router"; // Adjust the path according to your project structure
+
 export default {
   computed: {
     routeName() {
@@ -58,6 +59,27 @@ export default {
     };
   },
   methods: {
+    async logout() {
+      try {
+        await axios.post('http://localhost:8084/api/v1/auth/logout');
+        // You can perform any additional logout-related tasks here,
+        // such as clearing local storage, updating UI, etc.
+        console.log('Logged out successfully');
+        localStorage.clear();
+        this.$router.push('/users');
+        this.handleOk()
+
+
+
+      } catch (error) {
+        console.error('Error logging out:', error);
+      }
+    },
+  
+    handleOk(){
+  
+
+    },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },

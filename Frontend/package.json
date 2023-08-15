@@ -17,6 +17,7 @@
     "@vue/babel-preset-app": "^5.0.8",
     "axios": "^1.4.0",
     "bootstrap": "^4.6.2",
+    "bootstrap-vue": "^2.23.1",
     "chartist": "0.11.0",
     "cors": "^2.8.5",
     "es6-promise": "4.2.8",
@@ -31,6 +32,8 @@
     "vue-clickaway": "2.2.2",
     "vue-notifyjs": "0.3.0",
     "vue-router": "3.0.1",
+    "vue-timer-hook": "^1.0.84",
+    "vuex": "^4.1.0",
     "yup": "^1.2.0"
   },
   "devDependencies": {

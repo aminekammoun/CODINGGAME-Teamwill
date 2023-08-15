@@ -28,7 +28,7 @@
         <input v-model="data.email" type="email" placeholder="Email" />
         <input v-model="data.password" type="password" placeholder="Password" />
         <a href="#">Forget your password?</a>
-        <button type="submit">Sign In</button>
+        <button   type="submit">Sign In</button>
       </form>
     </div>
   </article>
@@ -38,35 +38,84 @@
 import { reactive } from 'vue';
 import axios from "axios";
 import router from "@/router"; // Adjust the path according to your project structure
+import { mapActions } from 'vuex';
 
 export default {
+
+  
   name: "Login",
-  setup() {
+  
+
+  methods:{getUserByEmail(eeee) {
+      const email = eeee;
+      console.log( eeee)
+      const url = `http://localhost:8084/email/${email}`;
+
+      axios
+        .get(url)
+        .then(response => {
+          this.donnee = response.data; 
+          console.log('User data by email:', response.data);
+          // Handle received user data
+        })
+        .catch(error => {
+          console.error('Error fetching user data:', error);
+          // Handle error or feedback here
+        });
+    }},
+
+  data() {
+     
     const data = reactive({
       email: '',
-      password: ''
+      password: '',
+   token:'',
+   id:'',
+  role: '',
+         
+ 
     });
-
+   
+    const { setUser } = mapActions(['setUser']); 
     const submit = async () => {
       try {
         const response = await axios.post('http://localhost:8084/api/v1/auth/authenticate', data, { withCredentials: true });
         axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+        // Save the user data in the store using the setUser action
+       console.log(`Bearer ${response.data.token}`)
         router.app.isAuthenticated = true;
         router.push("/users");
+        this.$store.dispatch('setUser', user); // Dispatch setUser action
+
+     //  console.log(`Bearer ${response.data.token}`);
+     this.getUserByEmail(`${response.data.email}`);
+       data.token=`${response.data.token}`
+        
+        setUser(response.data.user);
+        
       } catch (error) {
         // Handle errors if necessary
       }
     };
 
+ 
     return {
+     donnee:null,
       data,
+     
       submit,
-      signUp: false
+      signUp: true
     };
   }
 }
+
 </script>
+
  
+ 
+ 
+   
+
 <style lang="scss" scoped>
 article {
   display: flex;
